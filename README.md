@@ -2,8 +2,9 @@
 
 博客文章
 
-简书地址：http://www.jianshu.com/users/2750fa319a10
-CSDN地址：http://blog.csdn.net/game3108
+**简书地址：http://www.jianshu.com/users/2750fa319a10**
+
+**CSDN地址：http://blog.csdn.net/game3108**
 
 ###设计模式
 [设计模式——单例，原型，生成器.md](https://github.com/game3108/BlogArticles/blob/master/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%8D%95%E4%BE%8B%EF%BC%8C%E5%8E%9F%E5%9E%8B%EF%BC%8C%E7%94%9F%E6%88%90%E5%99%A8.md)
