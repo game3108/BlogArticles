@@ -20,3 +20,7 @@
 [iOS instruments介绍.md](https://github.com/game3108/BlogArticles/blob/master/iOS%E5%BC%80%E5%8F%91/iOS%20instruments%E4%BB%8B%E7%BB%8D.md)
 
 [iOS使用Category添加@property变量.md](https://github.com/game3108/BlogArticles/blob/master/iOS%E5%BC%80%E5%8F%91/iOS%E4%BD%BF%E7%94%A8Category%E6%B7%BB%E5%8A%A0%40property%E5%8F%98%E9%87%8F.md)
+
+[iOS实现无限后台background的方法.md](https://github.com/game3108/BlogArticles/blob/master/iOS%E5%BC%80%E5%8F%91/iOS%E5%AE%9E%E7%8E%B0%E6%97%A0%E9%99%90%E5%90%8E%E5%8F%B0background%E7%9A%84%E6%96%B9%E6%B3%95.md)
+
+[探索子线程autorelease对象的释放时机.md](https://github.com/game3108/BlogArticles/blob/master/iOS%E5%BC%80%E5%8F%91/%E6%8E%A2%E7%B4%A2%E5%AD%90%E7%BA%BF%E7%A8%8Bautorelease%E5%AF%B9%E8%B1%A1%E7%9A%84%E9%87%8A%E6%94%BE%E6%97%B6%E6%9C%BA.md)
