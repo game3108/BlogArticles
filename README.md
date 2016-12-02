@@ -24,3 +24,8 @@
 [iOS实现无限后台background的方法.md](https://github.com/game3108/BlogArticles/blob/master/iOS%E5%BC%80%E5%8F%91/iOS%E5%AE%9E%E7%8E%B0%E6%97%A0%E9%99%90%E5%90%8E%E5%8F%B0background%E7%9A%84%E6%96%B9%E6%B3%95.md)
 
 [探索子线程autorelease对象的释放时机.md](https://github.com/game3108/BlogArticles/blob/master/iOS%E5%BC%80%E5%8F%91/%E6%8E%A2%E7%B4%A2%E5%AD%90%E7%BA%BF%E7%A8%8Bautorelease%E5%AF%B9%E8%B1%A1%E7%9A%84%E9%87%8A%E6%94%BE%E6%97%B6%E6%9C%BA.md)
+
+[简单监测iOS卡顿的demo.md](https://github.com/game3108/BlogArticles/blob/master/iOS%E5%BC%80%E5%8F%91/%E7%AE%80%E5%8D%95%E7%9B%91%E6%B5%8BiOS%E5%8D%A1%E9%A1%BF%E7%9A%84demo.md)
+
+[［转］iOS crash分析.md](https://github.com/game3108/BlogArticles/blob/master/iOS%E5%BC%80%E5%8F%91/%EF%BC%BB%E8%BD%AC%EF%BC%BDiOS%20crash%E5%88%86%E6%9E%90.md)
+
