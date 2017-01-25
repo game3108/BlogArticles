@@ -59,3 +59,7 @@
 ###学习目录
 
 [RSA算法介绍.md](https://github.com/game3108/BlogArticles/blob/master/%E5%AD%A6%E4%B9%A0%E7%9B%AE%E5%BD%95/RSA%E7%AE%97%E6%B3%95%E4%BB%8B%E7%BB%8D.md)
+
+###问题记录
+
+[iOS小问题（一）.md](https://github.com/game3108/BlogArticles/tree/master/%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95)
