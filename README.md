@@ -31,6 +31,8 @@
 
 [CoreGraphics之CGContextSaveGState与UIGraphicsPushContext.md](https://github.com/game3108/BlogArticles/blob/master/iOS%E5%BC%80%E5%8F%91/CoreGraphics%E4%B9%8BCGContextSaveGState%E4%B8%8EUIGraphicsPushContext.md)
 
+[iOS架构组件化.md](https://github.com/game3108/BlogArticles/blob/master/iOS%E5%BC%80%E5%8F%91/iOS%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%E5%8C%96.md)
+
 ###源代码
 [JSONModel源代码解析.md](https://github.com/game3108/BlogArticles/tree/master/%E6%BA%90%E4%BB%A3%E7%A0%81)
 
