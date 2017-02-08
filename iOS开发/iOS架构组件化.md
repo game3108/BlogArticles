@@ -1,5 +1,4 @@
 ##前言
-本文csdn地址：http://blog.csdn.net/game3108/article/details/54894144
 当一个App只有几个人开发的时候，很容易就会在一个单项目中开发。但当App开发人数越来越多，甚至几百人，十几个不同BU都在协调开发同一个App的时候，就必须对架构进行组件化，才能方便开发。本文主要基于手机淘宝的一次架构探索：[手机淘宝客户端架构探索实践](https://yq.aliyun.com/articles/129)，基于此文进行的一些学习和探索，写一篇文章给自己梳理一下。
 
 ##组件化的目的
@@ -120,6 +119,9 @@ iOS,Android通过同一个URL总线在后台进行管理与配置。
 本文主要还是根据[手机淘宝客户端架构探索实践](https://yq.aliyun.com/articles/129)和视频，借鉴了[蘑菇街 App 的组件化之路](http://limboy.me/tech/2016/03/10/mgj-components.html)一些具体的实现思路，自己整理一下思路的总结和学习。
 
 ##参考资料
+
+[本文csdn地址](http://blog.csdn.net/game3108/article/details/54894144)
+
 1.[手机淘宝客户端架构探索实践](https://yq.aliyun.com/articles/129)
 2.[组件化架构漫谈](http://www.jianshu.com/p/67a6004f6930)
 3.[蘑菇街 App 的组件化之路](http://limboy.me/tech/2016/03/10/mgj-components.html)
