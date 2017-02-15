@@ -115,7 +115,7 @@ runloop原理可以参考[深入理解RunLoop](http://blog.ibireme.com/2015/05/1
 }
 
 + (instancetype) instanceWithNumber:(NSInteger)number{
-//不加__autoreleasing 会因为arc返回值优化而不是一个autorelease对象，可以去掉试试
+    //不加__autoreleasing 会因为arc返回值优化而不是一个autorelease对象，可以去掉试试
     __autoreleasing TestObject *object = [[TestObject alloc]init];
     object->_number = number;
     return object;
@@ -297,11 +297,136 @@ static void init()
 就会调用到pthread的方法，简单来讲就是会构造一个
 ```
 static struct {
-uintptr_t destructor;
+ uintptr_t destructor;
 } _pthread_keys[_INTERNAL_POSIX_THREAD_KEYS_END];
 ```
 
 将destructor方法保存，并且在thread退出的相应的时机调用。因为C水平有限，也只能懂个大概，也就不详细展开了。
+
+##2017.2.13更新
+我从stackoverflow [does NSThread create autoreleasepool automaticly now?](http://stackoverflow.com/questions/24952549/does-nsthread-create-autoreleasepool-automaticly-now)看到了一个更不错的答案，翻译一下，写在这里。
+
+这没有被存档，但这个答案显然是：是的。在OS X 10.9+余iOS 7+上。
+
+Objective-c的runtime对你来说是开源的，所以你可以读源代码看如何运行。最新版本的runtime(646，用在OS X 10.10和IOS 8)确实添加了一个pool如果你仔没有pool的情况下运行autorelease。
+
+```
+static __attribute__((noinline))
+id *autoreleaseNoPage(id obj)
+{
+    // No pool in place.
+    assert(!hotPage());
+
+    if (obj != POOL_SENTINEL  &&  DebugMissingPools) {
+        // We are pushing an object with no pool in place, 
+        // and no-pool debugging was requested by environment.
+        _objc_inform("MISSING POOLS: Object %p of class %s "
+                     "autoreleased with no pool in place - "
+                     "just leaking - break on "
+                     "objc_autoreleaseNoPool() to debug", 
+                     (void*)obj, object_getClassName(obj));
+        objc_autoreleaseNoPool(obj);
+        return nil;
+    }
+
+    // Install the first page.
+    AutoreleasePoolPage *page = new AutoreleasePoolPage(nil);
+    setHotPage(page);
+
+    // Push an autorelease pool boundary if it wasn't already requested.
+    if (obj != POOL_SENTINEL) {
+        page->add(POOL_SENTINEL);
+    }
+
+    // Push the requested object.
+    return page->add(obj);
+}
+```
+这个函数的调用时在你第一次压入pool（事实上push的是``POOL_SENTIAL``），或者你没有pool下autorelease。当第一个pool被压入，它建立autorelease的栈。但当你从code来看，因为``DebugMissingPools``的环境变量没有设置（不会被设为默认）。当autolrease没有pool下结束了，它同样会建立autorelease栈，然后压入一个pool(压入一个``POOL_SENTINEL``)
+
+同样的，（如果没有看其他代码，有点难理解，但这个是相关部分）。当thread被销毁（同样线程本地的存储也被销毁），它释放了每一个在autorelease栈中的对象（使用``pop(0);``）因此它不建立在用户去弹出最后一个pool。
+
+```
+static void tls_dealloc(void *p) 
+{
+    // reinstate TLS value while we work
+    setHotPage((AutoreleasePoolPage *)p);
+    pop(0);
+    setHotPage(nil);
+}
+```
+这个当前版本的runtime(551.1，来自于OS X 10.9与iOS 7)也同样做了这个，所以你可以看``NSObject.mm``
+```
+static __attribute__((noinline))
+id *autoreleaseSlow(id obj)
+{
+    AutoreleasePoolPage *page;
+    page = hotPage();
+
+    // The code below assumes some cases are handled by autoreleaseFast()
+    assert(!page || page->full());
+
+    if (!page) {
+        // No pool. Silently push one.
+        assert(obj != POOL_SENTINEL);
+
+        if (DebugMissingPools) {
+            _objc_inform("MISSING POOLS: Object %p of class %s "
+                         "autoreleased with no pool in place - "
+                         "just leaking - break on "
+                         "objc_autoreleaseNoPool() to debug", 
+                         (void*)obj, object_getClassName(obj));
+            objc_autoreleaseNoPool(obj);
+            return nil;
+        }
+
+        push();
+        page = hotPage();
+    }
+
+    do {
+        if (page->child) page = page->child;
+        else page = new AutoreleasePoolPage(page);
+    } while (page->full());
+
+    setHotPage(page);
+    return page->add(obj);
+}
+```
+但之前的版本(532.2，来自于OS X 10.8与 iOS 6)没有做。
+```
+static __attribute__((noinline))
+id *autoreleaseSlow(id obj)
+{
+    AutoreleasePoolPage *page;
+    page = hotPage();
+
+    // The code below assumes some cases are handled by autoreleaseFast()
+    assert(!page || page->full());
+
+    if (!page) {
+        assert(obj != POOL_SENTINEL);
+        _objc_inform("Object %p of class %s autoreleased "
+                     "with no pool in place - just leaking - "
+                     "break on objc_autoreleaseNoPool() to debug", 
+                     obj, object_getClassName(obj));
+        objc_autoreleaseNoPool(obj);
+        return NULL;
+    }
+
+    do {
+        if (page->child) page = page->child;
+        else page = new AutoreleasePoolPage(page);
+    } while (page->full());
+
+    setHotPage(page);
+    return page->add(obj);
+}
+```
+注意上面的代码为任何``pthread``执行，不仅仅是``NSThread``。
+
+基本上，如果你运行在OS X 10.9+或者iOS 7+，不用pool去autorelease在一个线程上不回引起内存泄漏。这个没有被文档记录并且是一个内部的实现细节，因此小心依赖这个因为Apple可能会在之后的系统修改它。然而，我看不到任何他们会移除这个功能的理由，因为这个简单，并且只有益处而没有坏处，除非他们重写autorelease pool的工作或者其他内容。
+
 
 ##参考资料
 1.[黑幕背后的Autorelease](http://blog.sunnyxx.com/2014/10/15/behind-autorelease/)
@@ -310,3 +435,4 @@ uintptr_t destructor;
 4.[Objective-C Autorelease Pool 的实现原理](http://blog.leichunfeng.com/blog/2015/05/31/objective-c-autorelease-pool-implementation-principle/#jtss-tsina)
 5.[runtime源代码](http://opensource.apple.com/tarballs/objc4/)
 6.[libpthread](http://opensource.apple.com/tarballs/libpthread/)
+7.[does NSThread create autoreleasepool automaticly now?](http://stackoverflow.com/questions/24952549/does-nsthread-create-autoreleasepool-automaticly-now)
