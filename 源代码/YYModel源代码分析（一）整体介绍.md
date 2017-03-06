@@ -1,6 +1,5 @@
 ##前言
-本文csdn地址：http://blog.csdn.net/game3108/article/details/52388089
-本文的中文注释代码demo更新在我的[github](https://github.com/game3108/YYModelDemo)上。
+本文的中文注释代码demo更新在我的[github](https://github.com/game3108/BlogDemo/tree/master/YYModelDemo)上。
 
 对于Model对象转换框架，之前有过[JSONModel源代码解析](http://www.jianshu.com/p/64ce3927eb62)。而这次来分析的框架，则是性能更佳优秀的[YYModel](https://github.com/ibireme/YYModel)。
 YYModel有比大多数同类框架，有着很好的性能优势（下图为作者在github的贴图）。
@@ -17,7 +16,7 @@ YYModel的使用相对于JSOMModel更佳简单，不需要类去继承JSONModel�
 {
 "number":"13612345678", 
 "name":"Germany",
-"age": 49
+ "age": 49
 }
 ```
 那我们会去建立相应的Object对象
@@ -73,29 +72,29 @@ YYModel本身的目录结构十分精简：
 ```
 //先转化json对象到dictionary，再调用yy_modelWithDictionary
 + (instancetype)yy_modelWithJSON:(id)json {
-NSDictionary *dic = [self _yy_dictionaryWithJSON:json];
-return [self yy_modelWithDictionary:dic];
+    NSDictionary *dic = [self _yy_dictionaryWithJSON:json];
+    return [self yy_modelWithDictionary:dic];
 }
 ```
 其中``_yy_dictionaryWithJSON``就是将id的json对象转成dictionary
 ```
 //解析model属性并附值
 + (instancetype)yy_modelWithDictionary:(NSDictionary *)dictionary {
-if (!dictionary || dictionary == (id)kCFNull) return nil;
-if (![dictionary isKindOfClass:[NSDictionary class]]) return nil;
-
-Class cls = [self class];
-//解析class得到modelmeta对象
-_YYModelMeta *modelMeta = [_YYModelMeta metaWithClass:cls];
-//本地class类型映射
-if (modelMeta->_hasCustomClassFromDictionary) {
-cls = [cls modelCustomClassForDictionary:dictionary] ?: cls;
-}
-
-NSObject *one = [cls new];
-//附值函数
-if ([one yy_modelSetWithDictionary:dictionary]) return one;
-return nil;
+    if (!dictionary || dictionary == (id)kCFNull) return nil;
+    if (![dictionary isKindOfClass:[NSDictionary class]]) return nil;
+    
+    Class cls = [self class];
+    //解析class得到modelmeta对象
+    _YYModelMeta *modelMeta = [_YYModelMeta metaWithClass:cls];
+    //本地class类型映射
+    if (modelMeta->_hasCustomClassFromDictionary) {
+        cls = [cls modelCustomClassForDictionary:dictionary] ?: cls;
+    }
+    
+    NSObject *one = [cls new];
+    //附值函数
+    if ([one yy_modelSetWithDictionary:dictionary]) return one;
+    return nil;
 }
 ```
 
@@ -120,7 +119,7 @@ FOUNDATION_EXPORT const unsigned char YYModelVersionString[];
 头文件并不难理解，先试判断是否包含``__has_include``，然后再引入正确的文件。
 在[YYModel 源码解读（一）之YYModel.h](http://www.cnblogs.com/machao/p/5514921.html)中有引入引号与左右括号有一段拓展，这边也记录一下：
 
-\#include / #import 语句有两种方式包含头文件，分别是使用双引号" "与左右尖括号< >。其区别是（对于不是使用完全文件路径名的）头文件的搜索顺序不同
+ \#include / #import 语句有两种方式包含头文件，分别是使用双引号" "与左右尖括号< >。其区别是（对于不是使用完全文件路径名的）头文件的搜索顺序不同
 
 使用双引号" "的头文件的搜索顺序：
 * 包含该#include语句的源文件所在目录；
@@ -136,6 +135,7 @@ FOUNDATION_EXPORT const unsigned char YYModelVersionString[];
 本文主要大体介绍了一下YYModel的整体结构，代码调用思路以及头文件YYModel.h代码。针对核心的NSObject+YYModel与YYClassInfo会分篇完成。
 
 ##参考资料
+[本文csdn地址](http://blog.csdn.net/game3108/article/details/52388089)
 1.[iOS JSON 模型转换库评测](http://blog.ibireme.com/2015/10/23/ios_model_framework_benchmark/)
 2.[郑钦洪_：YYModel 源码历险记](http://www.jianshu.com/p/9d9119d3d1e3)
 3.[YYModel 源码解读](http://www.cnblogs.com/machao/p/5514921.html)
