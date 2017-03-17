@@ -29,7 +29,7 @@ UITextField只有一行，没有多行输入。而UITextView可以多行输入�
 常用的就是URL Router的方式。比如蘑菇街的[MGJRouter](https://github.com/mogujie/MGJRouter)就很不错。这里推荐一篇文章，讲得很不错：[组件化架构漫谈](http://www.jianshu.com/p/67a6004f6930)。
 
 
-##参考链接：
+## 参考链接：
 [CSDN地址](http://blog.csdn.net/game3108/article/details/54838036)
 1.[关于 iOS 10 中 ATS 的问题](https://onevcat.com/2016/06/ios-10-ats/)
 2.[组件化架构漫谈](http://www.jianshu.com/p/67a6004f6930)
