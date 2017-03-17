@@ -1,12 +1,12 @@
-##前言
+## 前言
 这个系列就是随手记录一下平时捧到的一些问题和一些尝试。
 
 本文csdn地址：http://blog.csdn.net/game3108/article/details/52302610
 
 tips：如果有错误，或者有更好的详细解答，请随时联系我进行修改。
 
-##解决的问题
-####1.statusbar颜色问题
+## 解决的问题
+### 1.statusbar颜色问题
 
 >info.plist文件中，“View controller-based status bar appearance”项设为YES，则View controller对status bar的设置优先级高于application的设置。为NO则以application的设置为准，view controller的prefersStatusBarHidden方法无效，是根本不会被调用的。
 
@@ -30,7 +30,7 @@ tips：如果有错误，或者有更好的详细解答，请随时联系我进�
 }
 ```
 
-####2.webview NSURLErrorServerCertificateUntrusted 问题
+### 2.webview NSURLErrorServerCertificateUntrusted 问题
 webview加载某些页面，证书不可信，报1202error code，可用如下方法:
 ```
 #pragma mark UIWebViewDelegate
@@ -79,7 +79,7 @@ webview加载某些页面，证书不可信，报1202error code，可用如下�
 }
 ```
 
-####3.ui小细节
+### 3.ui小细节
 * 1.对于uiviewcontroller，ui初始化位置，``viewdidload``好过``init``，因为会有self.view的大小问题。
 * 2.``autoresizingMask``适合给cell使用，或者是类似初始化读self.view之类的宽度读出来是默认320的地方。
 * 3.parentview有``autoresizingMask``变化，但子view不会跟着变化。所以很多系统ui包含子view的，需要注意一下（比如uiwebview）。
@@ -88,27 +88,27 @@ webview加载某些页面，证书不可信，报1202error code，可用如下�
 self.edgesForExtendedLayout = UIRectEdgeNone;
 * 5.UILabel的``sizeToFit``和``autoresizingMask = UIViewAutoresizingFlexibleWidth``可能存在冲突。
 
-####4.iOS10的无限layoutsubviews问题
+### 4.iOS10的无限layoutsubviews问题
 iOS10下，在cell中使用``layoutsubviews``，中如果2次设置cell的frame，并且2次frame有不同，就会无限调用``layoutsubviews``，从而卡死。
 其他iOS系统没这问题，目测是iOS10测试版本的bug。
 
-####5.autoresizingMask与layoutsubviews生效时机问题
+### 5.autoresizingMask与layoutsubviews生效时机问题
 autoresizingMask先生效，然后生效layoutsubviews。
 
-####6.VIEW DEBUG时候，碰到的_UIView系列都是系统的UI
+### 6.VIEW DEBUG时候，碰到的_UIView系列都是系统的UI
 比如tableview出现的_UITableViewSeparatorView
 
-####7.UILabel sizeToFit会根据当前的view width进行fit，所以第一次很短的text会导致uilabel的view width变小，这个时候如果有一个长text，要重新设置view width再sizeToFit
+### 7.UILabel sizeToFit会根据当前的view width进行fit，所以第一次很短的text会导致uilabel的view width变小，这个时候如果有一个长text，要重新设置view width再sizeToFit
 
-####11.8更新
+### 11.8更新
 8.系统默认uitableview如果不去掉分割线，separateView会有0.5dp(1px)的高度。所以cell内的contentview的高度会差cell的高度0.5dp。
 
-##未解决的问题
+## 未解决的问题
 未解决的问题，如果有人知晓答案的话，麻烦评论指点一下。
 1.key不存在在strings文件中，NSLocalizedStringFromTable未找到key的时候，返回的key会从小写变成大写
 key不存在在strings文件中，用NSLocalizedStringFromTable去寻找某个key。
 strings文件中所有key为小写，但在某些分支上，返回值会变成key的大写。但在其他分支上不会。
 
-##参考链接：
+## 参考链接：
 1.[[iOS]关于状态栏(UIStatusBar)的若干问题](http://www.cnblogs.com/alby/p/4859537.html)
 2.[stackoverflow](http://stackoverflow.com/questions/11573164/uiwebview-to-view-self-signed-websites-no-private-api-not-nsurlconnection-i)
