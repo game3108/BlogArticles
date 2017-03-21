@@ -1,5 +1,4 @@
-##前言
-本文csdn地址：http://blog.csdn.net/game3108/article/details/51147946
+## 前言
 本文的demo代码也会更新到[github](https://github.com/game3108/RunloopMonitorDemo)上。
 
 做这个demo思路来源于微信team的：[微信iOS卡顿监控系统](http://mp.weixin.qq.com/s?__biz=MzAwNDY1ODY2OQ==&mid=207890859&idx=1&sn=e98dd604cdb854e7a5808d2072c29162&scene=4#wechat_redirect)。
@@ -57,7 +56,7 @@
 和``__CFRUNLOOP_IS_CALLING_OUT_TO_A_SOURCE1_PERFORM_FUNCTION__(source1);``之前。
 获取``kCFRunLoopBeforeSources``到``kCFRunLoopBeforeWaiting``再到``kCFRunLoopAfterWaiting``的状态就可以知道是否有卡顿的情况。
 
-##NSTimer的实现
+## NSTimer的实现
 具体代码如下：
 ```
 //
@@ -282,12 +281,12 @@ PS:整个demo写的比较简单，最后获取堆栈也仅获取了当前线程�
 
 ------------------------------------------------------
 
-####更新：
+#### 更新：
 了解到 plcrashreporter ([github地址](https://github.com/plausiblelabs/plcrashreporter)) 可以做到获取所有线程堆栈。
 
 ------------------------------------------------------
 
-####更新2:
+#### 更新2:
 这篇文章也介绍了监测卡顿的方法：[检测iOS的APP性能的一些方法](http://www.starming.com/index.php?v=index&view=91)
 通过Dispatch Semaphore保证同步这里记录一下。
 
@@ -423,7 +422,8 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
 用Dispatch Semaphore简化了代码复杂度，更加简洁。
 
 
-##参考资料
+## 参考资料
+[本文csdn地址](http://blog.csdn.net/game3108/article/details/51147946)
 1.[微信iOS卡顿监控系统](http://mp.weixin.qq.com/s?__biz=MzAwNDY1ODY2OQ==&mid=207890859&idx=1&sn=e98dd604cdb854e7a5808d2072c29162&scene=4#wechat_redirect)
 2.[ [iphone——使用run loop对象](http://blog.csdn.net/lingedeng/article/details/6870692)](http://blog.csdn.net/lingedeng/article/details/6870692)
 3.[深入理解RunLoop](http://blog.ibireme.com/2015/05/18/runloop/)
