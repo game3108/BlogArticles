@@ -1,8 +1,7 @@
-##前言
-本文CSDN地址：http://blog.csdn.net/game3108/article/details/54576633
+## 前言
 写这文章的原因是最近在写CG的时候，对于CGContextSaveGState与UIGraphicsPushContext的区别感到有一些困惑，就做了一些试验在这里列出来。
 
-##CoreGraphics与UIKit
+## CoreGraphics与UIKit
 这边从[iOS绘图教程](http://www.cnblogs.com/xdream86/archive/2012/12/12/2814552.html) 提取一些重要的内容。
 
 Core Graphics Framework是一套基于C的API框架，使用了Quartz作为绘图引擎。iOS支持两套图形API族：Core Graphics/QuartZ 2D 和OpenGL ES。
@@ -20,12 +19,12 @@ Core Graphics API所有的操作都在一个上下文中进行。所以在绘图
  
 作为初学者，很容易被UIKit和Core Graphics两个支持绘图的框架迷惑。
  
-####UIKit
+#### UIKit
 像UIImage、NSString（绘制文本）、UIBezierPath（绘制形状）、UIColor都知道如何绘制自己。这些类提供了功能有限但使用方便的方法来让我们完成绘图任务。一般情况下，UIKit就是我们所需要的。
  
 使用UiKit，你只能在当前上下文中绘图，所以如果你当前处于``UIGraphicsBeginImageContextWithOptions``函数或``drawRect：``方法中，你就可以直接使用UIKit提供的方法进行绘图。如果你持有一个context：参数，那么使用UIKit提供的方法之前，必须将该上下文参数转化为当前上下文。幸运的是，调用``UIGraphicsPushContext`` 函数可以方便的将context：参数转化为当前上下文，记住最后别忘了调用UIGraphicsPopContext函数恢复上下文环境。
  
-####Core Graphics
+#### Core Graphics
 这是一个绘图专用的API族，它经常被称为QuartZ或QuartZ 2D。Core Graphics是iOS上所有绘图功能的基石，包括UIKit。
  
 使用Core Graphics之前需要指定一个用于绘图的图形上下文（CGContextRef），这个图形上下文会在每个绘图函数中都会被用到。如果你持有一个图形上下文context：参数，那么你等同于有了一个图形上下文，这个上下文也许就是你需要用来绘图的那个。如果你当前处于``UIGraphicsBeginImageContextWithOptions``函数或``drawRect：``方法中，并没有引用一个上下文。为了使用Core Graphics，你可以调用``UIGraphicsGetCurrentContext``函数获得当前的图形上下文。
@@ -41,9 +40,9 @@ Core Graphics API所有的操作都在一个上下文中进行。所以在绘图
 1. ``UIGraphicsPushContext``:压栈当前的绘制对象，生成新的绘制图层
 2. ``CGContextSaveGState``:压栈当前的绘制状态
 
-##实例
+## 实例
 
-####CGContextSaveGState
+#### CGContextSaveGState
 我们这里用一段实际代码：
 ```
 -(void)drawRect:(CGRect)rect{
@@ -98,12 +97,13 @@ Core Graphics API所有的操作都在一个上下文中进行。所以在绘图
 
 如果你将``UIGraphicsPushContext(ctx);``与``UIGraphicsPopContext();``删去的话，是无法进行绘制的。
 
-**原因是，UIKit的绘制必须在当前的上下文中绘制，而UIGraphicsPushContext可以将当前的参数context转化为可以UIKit绘制的上下文，进行绘制图片。**
+** 原因是，UIKit的绘制必须在当前的上下文中绘制，而UIGraphicsPushContext可以将当前的参数context转化为可以UIKit绘制的上下文，进行绘制图片。**
 
-##总结
+## 总结
 ``CGContextSaveGState``是压栈当前的绘制状态，而``UIGraphicsPushContext``:压栈当前的绘制对象，生成新的绘制图层。对于``UIGraphicsPushContext``的使用，很多都是与UIKit配合使用，更详细的对于CoreGraphics的介绍，可以参考[iOS绘图教程](http://www.cnblogs.com/xdream86/archive/2012/12/12/2814552.html) 。
 
-##参考资料
+## 参考资料
+[本文CSDN地址](http://blog.csdn.net/game3108/article/details/54576633)
 1.[CGContextSaveGState vs UIGraphicsPushContext](http://stackoverflow.com/questions/15505871/cgcontextsavegstate-vs-uigraphicspushcontext)
 2.[iOS --- CoreGraphics中三种绘图context切换方式的区别](http://icetime17.github.io/2015/12/29/2015-12/iOS-CoreGraphics%E4%B8%AD%E4%B8%89%E7%A7%8D%E7%BB%98%E5%9B%BEcontext%E5%88%87%E6%8D%A2%E6%96%B9%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB/?utm_source=tuicool&utm_medium=referral)
 3.[iOS core graphic使用分析](http://blog.csdn.net/zhengyueyang71104233/article/details/15335683)
