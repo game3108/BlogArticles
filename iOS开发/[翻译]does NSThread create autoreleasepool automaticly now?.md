@@ -1,9 +1,10 @@
-##前言
+## 前言
 很不错的一个stackoverflow的问题，来自于[does NSThread create autoreleasepool automaticly now?](http://stackoverflow.com/questions/24952549/does-nsthread-create-autoreleasepool-automaticly-now)。
+
 之前写过一篇[探索子线程autorelease对象的释放时机](http://www.jianshu.com/p/03f0c41410d9)，但感觉没有很好的深入找到问题根源，而这个答案就锁定了。
 这里翻译一下，当作学习。
 
-##问题
+## 问题
 I have test code like this
 ```
 - (void)viewDidLoad
@@ -45,7 +46,7 @@ btw, I use Xcode5 and not using ARC
 
 anyone can help me to figure out what happening now?
 
-##回答原文
+## 回答原文
 
 It's not documented, but the answer appears to be **Yes**, on OS X 10.9+ and iOS 7+.
 The Objective-C runtime is [open-source](http://www.opensource.apple.com/source/objc4/) so you can read the source to see what's going on. The latest version of the runtime (646, which shipped with OS X 10.10 and iOS 8) does indeed add a pool if you perform an autorelease
@@ -167,7 +168,7 @@ Note that the above works for any pthreads, not just NSThreads.
 
 So basically, if you are running on OS X 10.9+ or iOS 7+, autoreleasing on a thread without a pool should not lead to a leak. This is not documented and is an internal implementation detail, so be careful relying on this as Apple could change it in a future OS. However, I don't see any reason why they would remove this feature as it is simple and only has benefits and no downsides, unless they completely re-write the way autorelease pools work or something.
 
-##答案翻译
+## 答案翻译
 这没有被文档化，但这个答案显然是：是的。在OS X 10.9+和iOS 7+上。
 
 Objective-c的runtime对你来说是开源的，所以你可以读源代码看如何运行。最新版本的runtime(646，用在OS X 10.10和IOS 8)确实添加了一个pool如果你仔没有pool的情况下运行autorelease。
@@ -289,6 +290,7 @@ id *autoreleaseSlow(id obj)
 
 基本上，如果你运行在OS X 10.9+或者iOS 7+，不用pool去autorelease在一个线程上不回引起内存泄漏。这个没有被文档记录并且是一个内部的实现细节，因此小心依赖这个因为Apple可能会在之后的系统修改它。然而，我看不到任何他们会移除这个功能的理由，因为这个简单，并且只有益处而没有坏处，除非他们重写autorelease pool的工作或者其他内容。
 
-##来源
-[does NSThread create autoreleasepool automaticly now?](http://stackoverflow.com/questions/24952549/does-nsthread-create-autoreleasepool-automaticly-now)
+## 来源
 [本文CSDN地址](http://blog.csdn.net/game3108/article/details/55051434)
+[does NSThread create autoreleasepool automaticly now?](http://stackoverflow.com/questions/24952549/does-nsthread-create-autoreleasepool-automaticly-now)
+
