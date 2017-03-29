@@ -40,7 +40,7 @@
 
 ### 源代码
 
-[JSONModel源代码解析.md](https://github.com/game3108/BlogArticles/tree/master/%E6%BA%90%E4%BB%A3%E7%A0%81)
+[JSONModel源代码解析.md](https://github.com/game3108/BlogArticles/blob/master/%E6%BA%90%E4%BB%A3%E7%A0%81/JSONModel%E6%BA%90%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90.md)
 
 [Masonry源代码解析.md](https://github.com/game3108/BlogArticles/blob/master/%E6%BA%90%E4%BB%A3%E7%A0%81/Masonry%E6%BA%90%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90.md)
 
