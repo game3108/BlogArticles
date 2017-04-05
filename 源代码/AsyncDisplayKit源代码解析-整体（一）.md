@@ -24,7 +24,7 @@ ASDK主要就是解决的问题就是操作页面过程中的保持帧率在60fp
 
 具体的原理，在[提升 iOS 界面的渲染性能](https://zhuanlan.zhihu.com/p/22255533?refer=iOS-Source-Code)文章中介绍的十分详细了，这里也不多阐述了。
 
-##优化原理
+## 优化原理
 从ASDK的视频与tutorial上，可以整理出三个ASDK主要优化的方面：
 1. **布局**：
 iOS自带的Autolayout在布局性能上存在瓶颈，并且只能在主线程进行计算。（参考[Auto Layout Performance on iOS](http://floriankugler.com/2013/04/22/auto-layout-performance-on-ios/)）因此ASDK弃用了Autolayout，自己参考自家的[ComponentKit](https://github.com/facebook/componentkit)设计了一套布局方式。
