@@ -1,4 +1,4 @@
-##前言
+## 前言
 CSDN地址：http://blog.csdn.net/game3108/article/details/52473932
 本文的中文注释代码demo更新在我的[github](https://github.com/game3108/MasonryDemo)上。
 
@@ -12,7 +12,7 @@ AutoLayout是Apple在iOS6中新增的UI布局适配的方法，用来替代iOS6�
 16.9.14更新：
 MASViewConstraint的``equalToWithRelation``添加array缺少``//viewConstraint.layoutRelation = relation;``的pull request已经被接受，该问题fixed。
 
-##约束
+## 约束
 
 NSLayoutConstraint约束是基于以下公式：
 
@@ -28,7 +28,7 @@ button1.left = button2.right + 10;
 * 2.VFL语言添加
 * 3.NSLayoutConstraint纯代码添加
 
-###1.storyboard/xib添加
+### 1.storyboard/xib添加
 storyboard/xib添加NSLayoutConstraint的方式主要是右下角的约束设置：
 
 ![xib右下角](http://upload-images.jianshu.io/upload_images/1829891-8199b64193978449.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
@@ -40,7 +40,7 @@ storyboard/xib添加NSLayoutConstraint的方式主要是右下角的约束设置
 
 相应的图这里就不再贴了，有兴趣的可以自己去试一下
 
-###2.VFL语言添加
+### 2.VFL语言添加
 VFL（Visual Format Language）是苹果公司为了简化autolayout的编码而推出的抽象语言。
 VFL调用以下方法：
 ```
@@ -52,7 +52,7 @@ views:(NSDictionary<NSString *, id> *)views;
 其中的``format``就是vfl语句。
 vfl的语句也较为复杂，这里不详细介绍了，具体可以参考苹果文档[Visual Format Language](https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/VisualFormatLanguage.html)。
 
-###3.NSLayoutConstraint纯代码添加
+### 3.NSLayoutConstraint纯代码添加
 我们举一个例子：
 view的上部距离距离superview有10的距离：
 ```
@@ -68,13 +68,13 @@ constant:10.0];                      //view.top = 1.0 * superView.top + 10
 可以看到约束代码算是列出了一个约束公式，也达到了约束的目的。
 但这些代码，其实只写了一个top的约束，如果有其它约束代码，需要同样写类似的代码出来，所以直接用NSLayoutConstraint纯代码添加还是比较麻烦的一件事。
 
-###4.约束的限制
+### 4.约束的限制
 （1）对于两个同层级 view 之间的约束关系，添加到它们的父 view 上
 （2）对于两个不同层级 view 之间的约束关系，添加到他们最近的共同父 view 上
 （3）对于有层次关系的两个 view 之间的约束关系，添加到层次较高的父 view 上
 （4）对于比如长宽之类的，只作用在该 view 自己身上的话，添加到该 view 自己上
 
-##Masonry的使用
+## Masonry的使用
 ###1.Masonry的例子
 Masonry的代码封装了NSLayoutConstraint纯代码，简洁了许多，和NSLayoutConstraint纯代码举同一个例子：
 view的上部距离距离superview有10的距离
@@ -89,8 +89,8 @@ make.top.equalTo(superView.top).offset(10);
 ```
 相对于NSLayoutConstraint纯代码的添加约束，Masonry使用了block外加链式语法，使得调用简洁和方便了许多。
 
-##Masonry源代码
-###1.整体结构
+## Masonry源代码
+### 1.整体结构
 Masonry的目录结构如下：
 
 ![Masonry](http://upload-images.jianshu.io/upload_images/1829891-d12dadfdce94e2ff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
@@ -126,7 +126,7 @@ MASCompositeConstraint.h/m:继承MASConstraint，表示系列view组合的约束
 
 **看了源代码会发现，Masonry的代码流程简单来讲就是：提供给用户一个建造者MASConstraintMaker，让用户根据mansory提供的语法，添加约束结构体MASConstraint。最后Masonry解析约束结构体MASConstraint，将真正的约束关系NSLayoutConstraint添加到相应的view上。**
 
-###2.源代码探究
+### 2.源代码探究
 我们根据一个实际调用代码来讲Masonry的源代码。代码如下：
 ```
 [view mas_makeConstraints:^(MASConstraintMaker *make){
@@ -139,7 +139,7 @@ make.top.mas_equalTo(superView.mas_top).with.mas_offset(10);
 
 在讲这两块前，首先讲一下底层的数据结构MASConstraint相关的结构
 
-####（1）MASConstraint相关结构
+#### （1）MASConstraint相关结构
 MASConstraint是定义约束的抽象类（虽然OC没有抽象类的说法）
 定义大概如下:
 ```
@@ -184,7 +184,7 @@ return [self addConstraintWithLayoutAttribute:NSLayoutAttributeLeft];
 虽然oc没有抽象类的定义，但在MASConstraint定义了一系列方法，让子类进行重写，而父类则用宏``MASMethodNotImplemented()``抛出异常
 
 而MASConstraint的子类则分别是MASViewConstraint与MASCompositeConstraint
-#####MASViewConstraint
+##### MASViewConstraint
 MASViewConstraint定义着一个单独的约束关系
 MASViewConstraint.h中定义如下：
 ```
@@ -220,7 +220,7 @@ constant:10.0];                      //view.top = 1.0 * superView.top + 10
 ```
 **可以看到，一个约束必须要有两组<item,NSLayoutAttribute>的结构体，还需要NSLayoutRelation\multiplier\constant。而这两个MASViewAttribute就是对应两组两组<item,NSLayoutAttribute>的结构体。**
 
-#####MASCompositeConstraint
+##### MASCompositeConstraint
 MASCompositeConstraint代表一组MASViewConstraint约束
 比如源代码中的``make.top``会转化为MASViewConstraint约束，而``make.top.bottom.left.right.xxxxx``这种写法会定义多种MASViewConstraint约束，而为了存储这种写法，则创建了MASCompositeConstraint。
 
@@ -235,7 +235,7 @@ MASCompositeConstraint.h定义并没有暴露太多细节，细节都在.m的匿
 ```
 childConstraints中存储的是每一条MASViewConstraint约束
 
-####（2）MASConstraintMaker调用
+#### （2）MASConstraintMaker调用
 MASConstraintMaker匿名Extension中的定义
 ```
 @interface MASConstraintMaker () <MASConstraintDelegate>
@@ -446,7 +446,7 @@ return self;
 设置偏移。
 至此，整个构建创建者MASConstraintMaker的调用到此为止。
 
-####（3）约束函数调用
+#### （3）约束函数调用
 
 例子代码中的调用函数如下:
 UIView+MASAdditions.m
@@ -620,7 +620,7 @@ self.layoutConstraint = layoutConstraint;
 其中比较有趣的是取得两个view的最小公共view的方法``mas_closestCommonSuperview:``。
 
 至此，简单的Masonry主调用的调用源代码也算全部解析过了。
-##总结
+## 总结
 总的来说Masonry的源代码有以下优点:
 * 1.大量简洁优美的宏（虽然用宏好不好另说）
 * 2.链式调用的实现
@@ -629,7 +629,7 @@ self.layoutConstraint = layoutConstraint;
 * 5.构造抽象类MASConstraint（虽然oc没有抽象类）
 * 6.内部接口MASConstraint+Private.h
 
-##参考资料
+## 参考资料
 1.[Apple-NSLayoutConstraint](https://developer.apple.com/reference/uikit/nslayoutconstraint)
 2.[Auto Layout Guide](https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/index.html)
 3.[Visual Format Language](https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/VisualFormatLanguage.html)
