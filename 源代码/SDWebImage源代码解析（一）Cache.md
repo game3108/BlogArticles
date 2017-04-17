@@ -1,4 +1,4 @@
-##前言
+## 前言
 CSDN地址：http://blog.csdn.net/game3108/article/details/52575740
 本文的中文注释代码demo更新在我的[github](https://github.com/game3108/SDWebImageDemo)上。
 
@@ -10,7 +10,7 @@ CSDN地址：http://blog.csdn.net/game3108/article/details/52575740
 本文也将对SDWebImage的源代码进行一次简单的解析，当作学习和记录。
 SDWebImage源代码较长，本文会分为一个一个部分进行解析。本次解析的部分就是SDImageCache。
 
-##SDImageCache使用
+## SDImageCache使用
 
 SDWebImage的使用十分简单，比较常用的一个接口:
 ```
@@ -20,7 +20,7 @@ placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
 只需要一个url和一个placeholderimage，就可以下载图片和设置占位图。
 
 
-##整体结构
+## 整体结构
 SDWebImage整体项目结构图：
 
 ![SDWebImage](http://upload-images.jianshu.io/upload_images/1829891-b97bfac9169cc6dd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
@@ -34,7 +34,7 @@ SDWebImage整体项目结构图：
 ``SDWebImageDecoder``:图片解压缩类
 ``SDWebImagePrefetcher``:图片预加载类
 5.Categories:相关类使用接口
-##Cache
+## Cache
 ``SDImageCache``是用来缓存图片到内存以及硬盘，它主要包含以下几类方法：
 * 创建Cache空间和路径
 * 存储图片
@@ -45,7 +45,7 @@ SDWebImage整体项目结构图：
 * 获取硬盘缓存大小
 * 判断key是否存在在硬盘
 
-###创建Cache空间和路径
+### 创建Cache空间和路径
 ``SDImageCache``的初始化方法就是初始化一些基本的值和注册相关的notification。
 相关方法如下：
 ```
@@ -171,7 +171,7 @@ return self;
 // PNG图片的标签值
 static unsigned char kPNGSignatureBytes[8] = {0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A};
 ```
-###存储图片
+### 存储图片
 存储图片主要分为2块：
 * 存储到内存
 直接计算图片大小后，用``NSCache *memCache``存储
@@ -327,7 +327,7 @@ return filename;
 
 ```
 
-###读取图片
+### 读取图片
 读取图片主要分为两步：
 * 内存cache读取
 直接读取内存cache``self.memCache``
@@ -510,7 +510,7 @@ return nil;
 ```
 这边牵扯到好几个其他类的方法，这边就不先标注它们的源代码了，等到讲到的时候再讲一下。
 
-###删除图片
+### 删除图片
 删除图片方法分为两步：
 * 先从cache删除缓存图片
 * 然后硬盘删除对应文件
@@ -576,7 +576,7 @@ completion();
 
 }
 ```
-###删除缓存
+### 删除缓存
 删除缓存也分为两块：
 * 直接清空缓存``memCache``
 * 删除硬盘存储目录，再重新创建目录
@@ -625,7 +625,7 @@ completion();
 }
 ```
 
-###清理缓存
+### 清理缓存
 清理缓存的目标是将过期的图片和确保硬盘存储大小小于最大存储许可。
 清理缓存的方法也是分为两步：
 *  清除所有过期图片
@@ -775,7 +775,7 @@ bgTask = UIBackgroundTaskInvalid;
 }
 ```
 
-###获取硬盘缓存大小
+### 获取硬盘缓存大小
 获取硬盘缓存大小直接读取硬盘路径下的文件数量和每个文件大小，进行累加。
 相关方法如下：
 ```
@@ -851,7 +851,7 @@ completionBlock(fileCount, totalSize);
 }
 ```
 
-###判断key是否存在在硬盘
+### 判断key是否存在在硬盘
 判断key是否存在在硬盘中，直接从硬盘中判断是否存在此key的文件路径
 相关方法如下：
 ```
@@ -904,7 +904,7 @@ completionBlock(exists);
 }
 ```
 
-##总结
+## 总结
 SDWebImage本身牵扯到很多内容，这篇文章先整体讲了一下SDImageCache的设计与实现，它有如下优点：
 * 1.memory的cache和硬盘存储结合存储
 * 2.后台清理硬盘存储空间
@@ -915,12 +915,12 @@ SDWebImage本身牵扯到很多内容，这篇文章先整体讲了一下SDImage
 当然也有一个path extension文件名问题。
 **这也告诉我们一个道理，很多时候文件名一定要想好怎么去存储，一旦进行修改了，后续兼容会很麻烦。**
 
-##其他
+## 其他
 本来是想SDWebImage解析完后与[YYWebImage](https://github.com/ibireme/YYWebImage)对比一下的，但既然都已经分文章去单独写了SDImageCache了，下篇文章就先解析[YYCache](https://github.com/ibireme/YYCache)。
 
 ***
 看了看YYCache的源代码，确实比较长，还是先把SDWebImage分析完。
 
-##参考资料
+## 参考资料
 1.[Avoiding Image Decompression Sickness](https://www.cocoanetics.com/2011/10/avoiding-image-decompression-sickness/)
 2.[SDWebImage源码浅析](http://joakimliu.github.io/2015/11/15/Resolve-The-SourceCode-Of-SDWebImage/)
