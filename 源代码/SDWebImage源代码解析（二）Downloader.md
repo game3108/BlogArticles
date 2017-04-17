@@ -1,24 +1,24 @@
-##前言
+## 前言
 CSDN地址：http://blog.csdn.net/game3108/article/details/52598835
 本文的中文注释代码demo更新在我的[github](https://github.com/game3108/SDWebImageDemo)上。
 
 [上篇文章](http://www.jianshu.com/p/5757f9e388f7)讲解的了SDWebImage的Cache部分，这篇讲讲一下Download部分。
 
-##Download
+## Download
 Download部分主要包含如下2个方法
 * SDWebImageDownloader
 图片下载控制类
 * SDWebImageDownloaderOperation
 NSOperation子类
 
-##SDWebImageDownloader
+## SDWebImageDownloader
 SDWebImageDownloader主要包含以下内容：
 * 初始化信息
 * 相关请求信息设置与获取
 * 请求图片方法
 * NSURLSession相关回调
 
-###初始化信息
+### 初始化信息
 SDWebImageDownloader.h中的property声明
 ```
 //下载完成执行顺序
@@ -146,7 +146,7 @@ SDDispatchQueueRelease(_barrierQueue);
 ```
 从这边也可以看出，SDWebImageDownloader的下载方法就是用NSOperation。使用NSOperationQueue去控制最大操作数量和取消所有操作，在NSOperation中运行NSUrlSession方法请求参数。
 
-###相关请求信息设置与获取
+### 相关请求信息设置与获取
 相关方法如下：
 ```
 //设置hedaer头
@@ -192,7 +192,7 @@ _operationClass = operationClass ?: [SDWebImageDownloaderOperation class];
 ```
 这一部分唯一提一下的是``setOperationClass:``方法，是为了可以自己实现NSOperation的子类去完成相关请求的设置。
 
-###请求图片方法
+### 请求图片方法
 相关方法实现如下：
 ```
 //请求图片方法
@@ -339,7 +339,7 @@ createCallback();
 * 2.新请求获取图片
 当url为第一次请求时候，构建请求request与operation，并开始运行operation
 
-###NSURLSession相关回调
+### NSURLSession相关回调
 相关方法如下：
 ```
 #pragma mark Helper methods
@@ -412,14 +412,14 @@ SDWebImageDownloaderOperation *dataOperation = [self operationWithTask:task];
 ```
 实际上相关处理都已经放到NSOperation进行处理。
 
-##SDWebImageDownloaderOperation
+## SDWebImageDownloaderOperation
 SDWebImageDownloaderOperation主要包含以下内容：
 * 初始化相关信息
 * 相关参数设置
 * 开始请求与取消请求
 * NSURLSession相关回调
 
-###初始化相关信息
+### 初始化相关信息
 SDWebImageDownloaderOperation.h的property声明
 ```
 @interface SDWebImageDownloaderOperation : NSOperation <SDWebImageOperation, NSURLSessionTaskDelegate, NSURLSessionDataDelegate>
@@ -527,7 +527,7 @@ return YES;
 ```
 这里重写的时候还注意到了原来相关属性的KVO值。
 
-###开始请求与取消请求
+### 开始请求与取消请求
 主要就是重写NSOperation的``start``和``cancel``方法，其中``cancel``方法还是``SDWebImageOperation``的回调。
 相关方法如下：
 ```
@@ -685,7 +685,7 @@ self.ownedSession = nil;
 ```
 这里比较有趣的是``self.thread``的妙用，如果存在``self.thread``说明operation已经start，那么cancel已经无效，必须等待请求完成后，才能去cancel它，防止出现问题。这边用``self.thread``就可以达成这样的目的。
 
-###NSURLSession相关回调
+### NSURLSession相关回调
 相关方法如下：
 
 ```
@@ -1019,7 +1019,7 @@ return self.options & SDWebImageDownloaderContinueInBackground;
 * 2.验证信息的方式
 ``didReceiveChallenge``方法代表在请求时候，遇到一些验证。
 
-##总结
+## 总结
 总的来说，Downloader有以下优点：
 * 1.设计上支持并发的下载同一个url的图片，并且有正确的回调
 * 2.通过barrier去确保获取数据不会与设置数据有冲突
@@ -1031,6 +1031,6 @@ return self.options & SDWebImageDownloaderContinueInBackground;
 ***
 更新：关于图片处理这块，在utils的解码中，有详细一些的标注，可以稍微用来理解这里的图片处理。
 
-##参考资料
+## 参考资料
 1.[SDWebImage源码浅析](http://joakimliu.github.io/2015/11/15/Resolve-The-SourceCode-Of-SDWebImage/)
 2.[Apple Guide:URL Session Programming Guide](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/URLLoadingSystem/Articles/UsingNSURLSession.html#//apple_ref/doc/uid/TP40013509-SW3)
