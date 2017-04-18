@@ -1,10 +1,10 @@
-##前言
+## 前言
 CSDN地址：http://blog.csdn.net/game3108/article/details/52638886
 本文的中文注释代码demo更新在我的[github](https://github.com/game3108/SDWebImageDemo)上。
 
 [上篇文章](http://www.jianshu.com/p/685e9b7ec4b2)讲解的了SDWebImage的Download部分，这篇讲讲一下Utils部分。
 
-##Utils
+## Utils
 Utils主要包含以下3个类：
 * SDWebImageManager
 核心的下载控制类
@@ -15,7 +15,7 @@ Utils主要包含以下3个类：
 
 以下将分别介绍3个类的源代码。
 
-##SDWebImageDecoder
+## SDWebImageDecoder
 SDWebImageDecoder内容就是UIImage的一个Category
 定义如下：
 ```
@@ -123,7 +123,7 @@ return imageWithoutAlpha;
 这边解码图片的做法和download完成处理中的类似，两边可以一起验证一下。
 这边解码图片主要原因就是图片的加载是lazy加载，在真正显示的时候才进行加载，这边先解码一次就会直接把图片加载完成。
 
-##SDWebImageManager
+## SDWebImageManager
 SDWebImageManager是核心的下载控制类方法，它内部封装了``SDImageCache``与``SDWebImageDownloader``
 主要包含以下几块：
 * 定义与初始化相关
@@ -132,7 +132,7 @@ SDWebImageManager是核心的下载控制类方法，它内部封装了``SDImage
 
 还有一些已经被废弃的实现，为了支持上的需要，也没删掉，这里也就不多说明了
 
-###定义与初始化相关
+### 定义与初始化相关
 SDWebImageManager.h中不仅包含SDWebImageManager类的声明，还包含了相关的delegate方法``@protocol SDWebImageManagerDelegate <NSObject>``还有下载设置enum与相关block的声明。
 定义如下：
 ```
@@ -346,7 +346,7 @@ _cancelBlock = nil;
 @end
 ```
 
-###存储与判断的一些封装方法
+### 存储与判断的一些封装方法
 存储与判断的封装就是一些``SDImageCache``的一些查询方法的封装与取消等操作的方法。
 相关方法声明如下：
 ```
@@ -505,7 +505,7 @@ isRunning = (self.runningOperations.count > 0);
 return isRunning;
 }
 ```
-###下载图片核心方法
+### 下载图片核心方法
 下载图片的方法定义如下：
 ```
 /**
@@ -750,7 +750,7 @@ return operation;
 ```
 这里建造了``SDWebImageCombinedOperation``的对象，去存储``SDImageCache``查询图片缓存的operation，然后再查询缓存的block中，嵌套了一个``SDWebImageDownloader``下载图片的subOperation。在``SDWebImageCombinedOperation``的cancelBlock中去设置了subOperation的取消操作。
 
-##SDWebImagePrefetcher
+## SDWebImagePrefetcher
 SDWebImagePrefetcher方法主要是用于部分图片需要先行下载并存储的情况。
 主要设计了两种回调方式
 * 1.SDWebImagePrefetcherDelegate
@@ -904,9 +904,9 @@ self.finishedCount = 0;
 }
 ```
 
-##总结
+## 总结
 Utils可以算是集合了前两章总结的Cache与Downloader的总和。提供了对此两种基础方法的一层封装，提供给外部使用。
 
-##参考资料
+## 参考资料
 1.[SDWebImage源码浅析](http://joakimliu.github.io/2015/11/15/Resolve-The-SourceCode-Of-SDWebImage/)
 2.[UIColor，CGColor，CIColor三者的区别和联系](http://www.cnblogs.com/smileEvday/archive/2012/06/05/UIColor_CIColor_CGColor.html)
