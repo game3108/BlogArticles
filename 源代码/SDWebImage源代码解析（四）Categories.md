@@ -1,10 +1,10 @@
-##前言
+## 前言
 CSDN地址：http://blog.csdn.net/game3108/article/details/52700626
 本文的中文注释代码demo更新在我的[github](https://github.com/game3108/SDWebImageDemo)上。
 
 [上篇文章](http://www.jianshu.com/p/f007dca390f0)讲解的了SDWebImage的Utils部分，这篇讲讲一下最后的Categories部分。
 
-##Categories
+## Categories
 Categories包含以下几个类文件：
 * MKAnnotationView+WebCache
 * NSData+ImageContentType
@@ -18,7 +18,7 @@ Categories包含以下几个类文件：
 
 这边只介绍一下``UIView+WebCacheOperation``与``UIImageView+WebCache``，其他文件类似，这里也不多展开了，在github的注释里会尽量都看一遍。
 
-##UIView+WebCacheOperation
+## UIView+WebCacheOperation
 UIView+WebCacheOperation主要通过associateObject的方式，去缓存和取消、删除运行的操作。
 相关方法定义如下：
 ```
@@ -95,7 +95,7 @@ NSMutableDictionary *operationDictionary = [self operationDictionary];
 }
 ```
 
-##UIImageView+WebCache
+## UIImageView+WebCache
 UIImageView+WebCache就是UIImage用到的sdwebimage的category，用户最外层的调用方式。
 这边贴其中最基础的操作方法的定义和实现：
 
@@ -181,12 +181,12 @@ completedBlock(nil, error, SDImageCacheTypeNone, url);
 }
 ```
 
-##总结
+## 总结
 到这里，SDWebImage就算全部解析完了。
 我个人感觉，里面比较精髓的是处理图片的一些细节，比如gif图片，还有decode图片，用空间换时间等一些做法，这些细节的实现是整个图片处理的基础。
 在框架上SDWebImage也是进行了多层的封装，将最基础的网络操作封装成operation，再此基础上再往上封装一层缓存层，并用一个manager去进行管理。而用户的使用调用都在category中实现相应的方法。
 
 据说现在正在做4.0版本，会有一些大的变化改动，可以期待一下。
 
-##参考资料
+## 参考资料
 1.[SDWebImage源码浅析](http://joakimliu.github.io/2015/11/15/Resolve-The-SourceCode-Of-SDWebImage/)
