@@ -1,4 +1,4 @@
-##前言
+## 前言
 本文的中文注释代码demo更新在我的[github](https://github.com/game3108/BlogDemo/tree/master/YYModelDemo)上。
 
  上篇 [YYModel源代码分析（一）整体介绍
@@ -15,7 +15,7 @@ YYClassInfo主要分为以下几部分：
 
 以下将分别分析每一部分的源代码。
 
-##YYClassInfo源代码
+## YYClassInfo源代码
 
 ### (1).typedef NS_OPTIONS(NSUInteger, YYEncodingType)与YYEncodingType YYEncodingGetType(const char *typeEncoding)方法
 ####相关知识
@@ -37,7 +37,7 @@ YYClassInfo主要分为以下几部分：
 * **YYModel中，包含了Class的property变量，还加上了Class的Method方法与Ivar的实例变量。对于Ivar来说，可能还存在在方法参数中，所以说所需要解析的类型会更加多一些。**
 
 
-####代码
+#### 代码
 在YYClassInfo.h中，先定义了一个NS_OPTIONS：
 ```
 typedef NS_OPTIONS(NSUInteger, YYEncodingType) {
@@ -217,7 +217,7 @@ struct ivar_t {
 };
 ```
 
-####代码
+#### 代码
 
 YYClassIvarInfo类声明：
 ```
@@ -261,7 +261,7 @@ YYClassIvarInfo类声明：
 }
 ```
 **YYClassIvarInfo本身就是对系统Ivar的一层封装，并进行了一次类型的解析。**
-####实例
+#### 实例
 用YYModel测试用例来进行观察：
 YYTestNestRepo实现：
 ```
@@ -284,7 +284,7 @@ YYTestNestRepo *repo = [YYTestNestRepo yy_modelWithJSON:json];
 ![YYClassIvarInfo-user](http://upload-images.jianshu.io/upload_images/1829891-685f64a25141524c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ### (3).@interface YYClassMethodInfo : NSObject
-####相关知识
+#### 相关知识
 
 **Method:**An opaque type that represents a method in a class definition.
 ```
@@ -325,7 +325,7 @@ typedef id (*IMP)(id, SEL, ...);
 #endif
 ```
 
-####代码
+#### 代码
 YYClassMethodInfo类声明：
 ```
 @interface YYClassMethodInfo : NSObject
@@ -378,7 +378,7 @@ YYClassMethodInfo类声明：
 ```
 
 
-####实例
+#### 实例
 用YYModel测试用例来进行观察：
 YYTestNestRepo实现：
 ```
@@ -409,7 +409,7 @@ YYTestNestRepo *repo = [YYTestNestRepo yy_modelWithJSON:json];
 
 ### (4).@interface YYClassPropertyInfo : NSObject
 
-####相关知识
+#### 相关知识
 **Property:**An opaque type that represents an Objective-C declared property.
 ```
 typedef struct property_t *objc_property_t;
@@ -421,7 +421,7 @@ struct property_t {
 ```
 其中对于attributes就是property属性的encode string。具体解析可以参考JSONModel的文章。
 
-####代码
+#### 代码
 YYClassPropertyInfo类声明：
 ```
 @interface YYClassPropertyInfo : NSObject
@@ -542,7 +542,7 @@ YYClassPropertyInfo类声明：
 
 这段的解析方式和之前JSONModel的解析property方式有些类似，也不多做介绍了。
 
-####实例
+#### 实例
 用YYModel测试用例来进行观察：
 YYTestNestRepo实现：
 ```
@@ -566,7 +566,7 @@ YYTestNestRepo *repo = [YYTestNestRepo yy_modelWithJSON:json];
 
 ### (5).@interface YYClassInfo : NSObject
 
-####相关知识
+#### 相关知识
 
 **Class:**An opaque type that represents an Objective-C class.
 ```
@@ -603,7 +603,7 @@ public:
 ![superclass and metaclass](http://upload-images.jianshu.io/upload_images/1829891-f88d2588ada3e99e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 上图实线是 super_class 指针，虚线是isa指针。 有趣的是根元类的超类是NSObject，而isa指向了自己，而NSObject的超类为nil，也就是它没有超类。
 
-####代码
+#### 代码
 YYClassInfo类声明：
 ```
 @interface YYClassInfo : NSObject
@@ -754,7 +754,7 @@ YYClassInfo中有一个needUpdate是否更新的标识符，当手动更改class
 ```
 该函数虽然比较长，但也比较好理解，就是将method,property,ivar全部取出并附值给缓存。
 
-####实例
+#### 实例
 用YYModel测试用例来进行观察：
 YYTestNestRepo实现：
 ```
@@ -777,7 +777,7 @@ YYTestNestRepo *repo = [YYTestNestRepo yy_modelWithJSON:json];
 
 **至此，整个model的class信息全部被解析完成，然后设置到了YYClassInfo类型的上。**
 
-##小结
+## 小结
 相对于JSONModel只对Property进行解析然后缓存。
 YYModel将Class的Method,Property,Ivar全部进行了解析与缓存。
 
@@ -786,7 +786,7 @@ YYModel将Class的Method,Property,Ivar全部进行了解析与缓存。
 * 2.CFMutableDictionaryRef的缓存
 * 3.可以动态更新的needUpdate
 
-##参考资料
+## 参考资料
 [本文csdn地址](http://blog.csdn.net/game3108/article/details/52398880)
 1.[郑钦洪_：YYModel 源码历险记](http://www.jianshu.com/users/aa41dad549af/latest_articles)
 2.[Objective-C Runtime Programming Guide - Declared Properties](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtPropertyIntrospection.html)
