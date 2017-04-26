@@ -1,10 +1,10 @@
-##前言
+## 前言
 本文的中文注释代码demo更新在我的[github](https://github.com/game3108/BlogDemo/tree/master/YYModelDemo)上。
 
  上篇 [YYModel源代码分析（二）YYClassInfo
 ](http://www.jianshu.com/p/012dbce17a50) 主要分析了YYClassInfo文件。本篇会主要集中在NSObject+YYModel文件上。文章内容会包含一些与JSONModel的比较，想了解JSONModel，可以参考[JSONModel源代码解析](http://www.jianshu.com/p/64ce3927eb62)。
 
-##主体分层
+## 主体分层
 NSObject+YYModel主要分为以下几个部分：
 
 *  内部使用的C函数部分
@@ -17,10 +17,10 @@ NSObject+YYModel主要分为以下几个部分：
 
 由于代码较多，所以会挑重点的部分进行介绍。
 
-##NSObject+YYModel源代码
+## NSObject+YYModel源代码
 
-###@interface _YYModelPropertyMeta : NSObject
-####声明
+### @interface _YYModelPropertyMeta : NSObject
+#### 声明
 ```
 /// A property info in object model.
 // model property的进一步分装
@@ -98,7 +98,7 @@ NSObject+YYModel主要分为以下几个部分：
              @"userSet" : YYBaseUser.class};
 }
 ```
-####实现
+#### 实现
 ```
 //通过YYClassInfo，YYClassPropertyInfo，Class对象解析成_YYModelPropertyMeta
 + (instancetype)metaWithClassInfo:(YYClassInfo *)classInfo propertyInfo:(YYClassPropertyInfo *)propertyInfo generic:(Class)generic {
@@ -215,8 +215,8 @@ NSObject+YYModel主要分为以下几个部分：
 ```
 实现部分还是容易理解，主要还是通过YYClassInfo，YYClassPropertyInfo，Class对象解析成_YYModelPropertyMeta。
 
-###@interface _YYModelMeta : NSObject
-####声明
+### @interface _YYModelMeta : NSObject
+#### 声明
 ```
 /// A class info in object model.
 // model class的进一层封装
@@ -310,7 +310,7 @@ _multiKeysPropertyMetas是表示映射如果是一个NSArray比如``@"modelID" :
 ```
 最后一个在``_YYModelPropertyMeta``已经提过，这里不再提。
 
-####实现
+#### 实现
 
 ```
 - (instancetype)initWithClass:(Class)cls {
@@ -500,7 +500,7 @@ _multiKeysPropertyMetas是表示映射如果是一个NSArray比如``@"modelID" :
 ```
 实现处理了很多key mapper的映射问题，但本身逻辑并不复杂。
 
-##解析逻辑
+## 解析逻辑
 
 ```
 //id json对象转化为 dictioanry的方法
@@ -617,7 +617,7 @@ static void ModelSetWithDictionaryFunction(const void *_key, const void *_value,
 
 **至此，整个YYModel的解析就完成了。**
 
-##总结
+## 总结
 YYModel在整体的解析过程中，分三步：
 1. 先将Class的Method，Property，Ivar分别解析缓存，构成Class的缓存
 2. 构建``_YYModelPropertyMeta``缓存Property结构体，再``_YYModelMeta``缓存``_YYModelPropertyMeta``结构。
@@ -638,7 +638,7 @@ model类型转换| 无 |  有
 
 
 
-##参考资料
+## 参考资料
 [CSDN地址](http://blog.csdn.net/game3108/article/details/52416868)
 1.[JSONModel源代码解析](http://www.jianshu.com/p/64ce3927eb62)
 2.[郑钦洪_：YYModel 源码历险记](http://www.jianshu.com/users/aa41dad549af/latest_articles)
