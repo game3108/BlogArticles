@@ -1,4 +1,4 @@
-####iOS instruments介绍
+#### iOS instruments介绍
 本文csdn地址：http://blog.csdn.net/game3108/article/details/51147909
 写代码的时候，我们时常需要借助一些工具来帮我们分析问题、找到问题，来达到调适和优化代码的目的。在iOS开发方面，XCode提供了一系列工具来帮助我们解决问题，这就是instruments。
 
@@ -7,7 +7,7 @@
 
 本文主要介绍一下instruments，和其中几个常用的工具。
 
-######界面介绍
+###### 界面介绍
 
 **instruments工作流程图：**
 ![instruments工作流程图](https://developer.apple.com/library/prerelease/ios/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/Art/instruments_workflow_diagram_2x.png)
@@ -28,7 +28,7 @@
 **instruments主界面图：**
 ![instruents主界面图](https://developer.apple.com/library/prerelease/ios/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/Art/instruments_profilingtemplate_dialog_2x.png)
 
-######Core Animation
+###### Core Animation
 
 >The Core Animation instrument captures information on selected animation statistics. It can record information from a single process or from all processes running on the system.
 
@@ -67,7 +67,7 @@ Misaligned Image表示要绘制的点无法直接映射到频幕上的像素点�
 
 对图形性能的分析意义较小，通常仅作为参考。
 
-######Timer Profiler
+###### Timer Profiler
 
 >The Time Profiler instrument captures stack trace information at prescribed intervals. It can record information from a single process or from all processes running on the system.
 
@@ -93,7 +93,7 @@ Misaligned Image表示要绘制的点无法直接映射到频幕上的像素点�
 ![](http://upload-images.jianshu.io/upload_images/1829891-dd9d612252125416.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
-######Leaks
+###### Leaks
 >The Leaks instrument captures information about leaked memory. It can record information from a single process only.
 
 ![](http://upload-images.jianshu.io/upload_images/1829891-a6c0996cdd7f4df0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
@@ -108,7 +108,7 @@ Leaks那行出现的红色标签代表着有内存泄漏。
 
 ![](http://upload-images.jianshu.io/upload_images/1829891-b37765221e4c73a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-####参考链接
+#### 参考链接
 1.iOS developer library: [Instruments User Guide](https://developer.apple.com/library/prerelease/ios/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/index.html#//apple_ref/doc/uid/TP40004652-CH3-SW1)
 2.iOS App的性能关注点:[iOS App的性能关注点](http://www.hrchen.com/2013/05/performance-with-instruments/)
 3.Designing for iOS: Graphics & Performance：[Designing for iOS: Graphics & Performance](https://robots.thoughtbot.com/designing-for-ios-graphics-performance)
