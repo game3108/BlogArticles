@@ -1,4 +1,4 @@
-##前言
+## 前言
 本文csdn地址：http://blog.csdn.net/game3108/article/details/51147949
 今天在给同事讲autorelease对象释放时机：
 
@@ -234,7 +234,7 @@ runloop循环中，呼叫了相应的observer，进行autoreleasepool的创建�
 **每一个线程创建的时候就会有一个autorelease pool的创建，并且在线程退出的时候，清空整个autorelease pool。（ps:如果在子线程中设置一个循环，autorelease对象确实无法释放）**
 
 
-###总结：
+### 总结：
 **每个线程创建的时候就会创建一个autorelease pool，并且在线程退出的时候，清空autorelease pool。所以子线程的autorelease对象，要么在子线程中设置runloop清楚**
 
 -------------------------------------------------------------------------
@@ -303,7 +303,7 @@ static struct {
 
 将destructor方法保存，并且在thread退出的相应的时机调用。因为C水平有限，也只能懂个大概，也就不详细展开了。
 
-##2017.2.13更新
+## 2017.2.13更新
 我从stackoverflow [does NSThread create autoreleasepool automaticly now?](http://stackoverflow.com/questions/24952549/does-nsthread-create-autoreleasepool-automaticly-now)看到了一个更不错的答案，翻译一下，写在这里。
 
 这没有被存档，但这个答案显然是：是的。在OS X 10.9+余iOS 7+上。
@@ -428,7 +428,7 @@ id *autoreleaseSlow(id obj)
 基本上，如果你运行在OS X 10.9+或者iOS 7+，不用pool去autorelease在一个线程上不回引起内存泄漏。这个没有被文档记录并且是一个内部的实现细节，因此小心依赖这个因为Apple可能会在之后的系统修改它。然而，我看不到任何他们会移除这个功能的理由，因为这个简单，并且只有益处而没有坏处，除非他们重写autorelease pool的工作或者其他内容。
 
 
-##参考资料
+## 参考资料
 1.[黑幕背后的Autorelease](http://blog.sunnyxx.com/2014/10/15/behind-autorelease/)
 2.[autorelease使用注意事项](http://bbs.9ria.com/thread-223911-1-1.html)
 3.[深入理解RunLoop](http://blog.ibireme.com/2015/05/18/runloop/)
