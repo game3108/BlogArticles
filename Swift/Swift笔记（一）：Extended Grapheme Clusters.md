@@ -1,8 +1,8 @@
-##前言
+## 前言
 CSDN地址：http://blog.csdn.net/game3108/article/details/52957669
 最近在看苹果官方swift文档[《The Swift Programming Language》](https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/index.html#//apple_ref/doc/uid/TP40014097-CH3-ID0)，记录一些笔记。
 
-##Extended Grapheme Clusters
+## Extended Grapheme Clusters
 
 swift使用了Extended Grapheme Clusters作为Character的显示。内容如下：
 >Every instance of Swift’s Character
@@ -18,7 +18,7 @@ Unicode标准提供了算法去定义grapheme cluster boundaries，其中包括�
 
 具体的计算方式可以从文章中进行详细的了解。
 
-##举例
+## 举例
 
 拿一个Apple文档里的例子：
 ```
@@ -40,7 +40,7 @@ str.characters.count // returns 7
 ```
 就是现在**所见非所得了**，所以在处理swift string与nsstring转化时，要注意一下unicode的编码和长度问题。
 
-##参考资料
+## 参考资料
 1.[The Swift Programming Language](https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/index.html#//apple_ref/doc/uid/TP40014097-CH3-ID0)
 2.[Why is Swift counting this Grapheme Cluster as two characters instead of one?](http://stackoverflow.com/questions/35823611/why-is-swift-counting-this-grapheme-cluster-as-two-characters-instead-of-one)
 3.[Grapheme Cluster Boundaries](http://www.unicode.org/reports/tr29/#Grapheme_Cluster_Boundaries)
