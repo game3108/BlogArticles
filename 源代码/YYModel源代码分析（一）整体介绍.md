@@ -45,7 +45,7 @@ YYModel本身的目录结构十分精简：
 
 **包括：**
 * **文件YYModel.h:**导入YYModel头文件
-* **文件NSObject+YYModel:**YYModel主体Extension
+* **文件NSObject+YYModel:**YYModel主体Category
 * **文件YYClassInfo:**Class解析类
 
 **代码结构引用[YYModel 源码历险记<一> 代码结构](http://www.jianshu.com/users/aa41dad549af/latest_articles)的一张图：**
@@ -61,9 +61,9 @@ YYModel本身的目录结构十分精简：
 **文件NSObject+YYModel中包含：**
 * ``@interface _YYModelPropertyMeta : NSObject``：对Model的property进行解析与构造(.m中的private类)
 * ``@interface _YYModelMeta : NSObject``：对Model进行解析与构造(.m中的private类)
-* ``@interface NSObject (YYModel)``：NSObject的YYModel Extension
-* ``@interface NSArray (YYModel)``：NSArray的YYModel Extension
-* ``@interface NSDictionary (YYModel)``：NSDictionary的YYModel Extension
+* ``@interface NSObject (YYModel)``：NSObject的YYModel Category
+* ``@interface NSArray (YYModel)``：NSArray的YYModel Category
+* ``@interface NSDictionary (YYModel)``：NSDictionary的YYModel Category
 * ``@protocol YYModel <NSObject>``:接口YYModel
 
 **此次分析，将会先看一下``yy_modelWithJSON``方法的调用，讲一下大体代码思路，然后就分别分析YYModel.h，YYClassInfo，NSObject+YYModel源代码，相当于从下而上进行分析。**
